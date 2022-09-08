@@ -1,10 +1,11 @@
 /*********************************************************************/
 /*********************************************************************/
 /**********Author: Mohamed Rezk Bayoumi*******************************/
-/**********File: DIO_private.h****************************************/
-/**********Date: 2nd sep 2022*****************************************/
-/**********Version: V1************************************************/
-/********* Desc: Mohamed Rezk Bayoumi*******************************/
+/**********File: DIO_prg.c****************************************/
+/**********Date: 8thd sep 2022*****************************************/
+/**********Version: V1.1************************************************/
+/********* Desc: got rid of all the magic numbers*********************/
+/**********so it's more readable *************************************/
 /*********************************************************************/
 /*********************************************************************/
 
@@ -26,27 +27,27 @@ void DIO_VidSetPinDirection(u8 Copy_U8Port,u8 Copy_U8Pin,u8 Copy_U8Dir)
     */
     switch(Copy_U8Dir)
     {
-        case 0:
+        case INPUT:
         switch(Copy_U8Port)
         {
-            case 0:
+            case PORTA:
             {
             CLEAR_BIT(DDRA_REG,Copy_U8Pin);
             break;
             }
-            case 1: /*PORT B*/
+            case PORTB: /*PORT B*/
             {
             CLEAR_BIT(DDRB_REG,Copy_U8Pin);
             break;
             }
-            case 2: /*PORTC_REG*/
+            case PORTC: /*PORT C*/
             {
             CLEAR_BIT(DDRC_REG,Copy_U8Pin);
             break;
             }
-            case 3: /*PORTD_REG*/
+            case PORTD: /*PORT D*/
             {
-            CLEAR_BIT(DDRD_REG,Copy_U8Pin);
+            CLEAR_BIT(DDRD_REG ,Copy_U8Pin);
             break;
             }
             default :
@@ -56,31 +57,31 @@ void DIO_VidSetPinDirection(u8 Copy_U8Port,u8 Copy_U8Pin,u8 Copy_U8Dir)
             }
 
         }break;
-        case 1:
+        case OUTPUT:
         switch(Copy_U8Port)
         {
-            case 0: /*PORTA_REG*/
+            case PORTA: /*PORT A*/
             {
             SET_BIT(DDRA_REG,Copy_U8Pin);
             break;
             }
-            case 1: /*PORT B*/
+            case PORTB: /*PORT B*/
             {
             SET_BIT(DDRB_REG,Copy_U8Pin);
             break;
             }
-            case 2: /*PORTC_REG*/
+            case PORTC: /*PORTC_REG*/
             {
             SET_BIT(DDRC_REG,Copy_U8Pin);
             break;
             }
-            case 3: /*PORTD_REG*/
+            case PORTD: /*PORTD_REG*/
             {
             SET_BIT(DDRD_REG,Copy_U8Pin);
             break;
             }
             default :
-            	break;
+            	break; /*Do nothing*/
         }break;
 
     }
@@ -98,54 +99,54 @@ void DIO_VidSetPortDirection(u8 Copy_U8Port,u8 Copy_U8Dir)
 {
     switch (Copy_U8Port)
     {
-        case 0: /*PORTA_REG*/
+        case PORTA: /*PORT A */
         {
         DDRA_REG=Copy_U8Dir;
         break;
         }
-        case 1: /*PORTB_REG*/
+        case PORTB: /*PORTB_REG*/
         {
         DDRB_REG=Copy_U8Dir;
         break;
         }
-        case 2: /*PORTC_REG*/
+        case PORTC: /*PORTC_REG*/
         {
         DDRC_REG=Copy_U8Dir;
         break;
         }
-        case 3: /*PORTD_REG*/
+        case PORTD: /*PORTD_REG*/
         {
         DDRD_REG=Copy_U8Dir;
         break;
         }
         default:
-         break;
+         break; /*Do nothing*/
 
     }
 }
 
 void DIO_VidSetPinValue(u8 Copy_U8Port,u8 Copy_U8Pin,u8 Copy_U8Val)
 {
-    if(Copy_U8Val==0)
+    if(Copy_U8Val==LOW)
     {
         switch(Copy_U8Port)
         {
-            case 0: /*PORTA_REG*/
+            case PORTA: /*PORT A */
             {
             CLEAR_BIT(PORTA_REG,Copy_U8Pin);
             break;
             }
-            case 1: /*PORT B*/
+            case PORTB: /*PORT B*/
             {
             CLEAR_BIT(PORTB_REG,Copy_U8Pin);
             break;
             }
-            case 2: /*PORTC_REG*/
+            case PORTC: /*PORT C */
             {
             CLEAR_BIT(PORTC_REG,Copy_U8Pin);
             break;
             }
-            case 3: /*PORTD_REG*/
+            case PORTD: /*PORTD_REG*/
             {
             CLEAR_BIT(PORTD_REG,Copy_U8Pin);
             break;
@@ -157,24 +158,24 @@ void DIO_VidSetPinValue(u8 Copy_U8Port,u8 Copy_U8Pin,u8 Copy_U8Val)
         }
     }
 
-    else if(Copy_U8Val==1)
+    else if(Copy_U8Val==HIGH)
     {
         switch(Copy_U8Port)
         {
-            case 0: /*PORTA_REG*/
+            case PORTA: /*PORT A */
             SET_BIT(PORTA_REG,Copy_U8Pin);
             break;
-            case 1: /*PORT B*/
+            case PORTB: /*PORT B*/
             SET_BIT(PORTB_REG,Copy_U8Pin);
             break;
-            case 2: /*PORTC_REG*/
+            case PORTC: /*PORT C */
             SET_BIT(PORTC_REG,Copy_U8Pin);
             break;
-            case 3: /*PORTD_REG*/
+            case PORTD: /*PORT D */
             SET_BIT(PORTD_REG,Copy_U8Pin);
             break;
             default :
-            	break;
+            	break; /*do nothing*/
         }
      }
 }
@@ -214,16 +215,16 @@ void DIO_VidTogglePinValue(u8 Copy_U8Port,u8 Copy_U8Pin)
 {
     switch(Copy_U8Port)
     {
-        case 0: /*PORTA_REG*/
+        case PORTA: /*PORT A*/
         TOGGLE_BIT(PORTA_REG,Copy_U8Pin);
         break;
-        case 1: /*PORTB_REG*/
+        case PORTB: /*PORT B*/
         TOGGLE_BIT(PORTB_REG,Copy_U8Pin);
         break;
-        case 2: /*PORTC_REG*/
+        case PORTC: /*PORT C*/
         TOGGLE_BIT(PORTC_REG,Copy_U8Pin);
         break;
-        case 3: /*PORTD_REG*/
+        case PORTD: /*PORT D*/
         TOGGLE_BIT(PORTD_REG,Copy_U8Pin);
         break;
         default:
@@ -236,20 +237,20 @@ u8 DIO_U8GetPinValue(u8 Copy_U8Port,u8 Copy_U8Pin)
     u8 Loc_PinVal;
     switch(Copy_U8Port)
     {
-        case 0: /*PINA_REG*/
+        case PORTA: /*PIN A*/
         Loc_PinVal=GET_BIT(PINA_REG,Copy_U8Pin);
         break;
-        case 1: /*PINB_REG*/
+        case PORTB: /*PIN B*/
         Loc_PinVal=GET_BIT(PINB_REG,Copy_U8Pin);
         break;
-        case 2: /*PORTC_REG*/
+        case PORTC: /*PORT C*/
         Loc_PinVal=GET_BIT(PINC_REG,Copy_U8Pin);
         break;
-        case 3: /*PORTD_REG*/
+        case PORTD: /*PORT D*/
         Loc_PinVal=GET_BIT(PIND_REG,Copy_U8Pin);
         break;
         default:
-        ; 
+         break; /*do nothing*/ 
     }
     return Loc_PinVal;
 }
